@@ -1,14 +1,15 @@
-import { component } from './kappa';
-import { html } from 'lit-html';
+import Kappa from "./kappa";
+import { component } from "./kappa";
+import { html } from "lit-html";
 
 const template = () => {
-  html`
+  return html`
     <h1>Hello World</h1>
-  `
-}
+  `;
+};
 
-component('hello-world', template, {
+Kappa.component("hello-world", template, {
   created() {
-    console.log('created');
+    console.log("created");
   }
-})
+});

@@ -1,4 +1,4 @@
-import { render } from "./node_modules/lit-html";
+import { render, html } from "./node_modules/lit-html";
 
 let componentMap = {};
 
@@ -9,14 +9,14 @@ export default class Kappa {
   }
 }
 
-export function component(name, template, definition) {
+Kappa.component = function component(name, template, definition) {
   if (componentMap[name])
     throw new Error(`The component ${name} is already registered`);
 
   const webComponent = createKappaComponent(template, definition);
   componentMap[name] = webComponent;
   window.customElements.define(name, webComponent);
-}
+};
 
 export function createKappaComponent(template, definition) {
   return class extends HTMLElement {
@@ -28,11 +28,10 @@ export function createKappaComponent(template, definition) {
       const container = document.createDocumentFragment();
       render(this._render(), container);
       shadow.appendChild(container);
-      shadow.innerHTML = template;
     }
 
     _render() {
-      return template;
+      return template();
     }
 
     connectedCallback() {
