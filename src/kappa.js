@@ -1,4 +1,4 @@
-import { render, html } from "./node_modules/lit-html";
+import { render } from "lit-html";
 
 let componentMap = {};
 

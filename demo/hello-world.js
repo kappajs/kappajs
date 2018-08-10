@@ -1,5 +1,4 @@
-import Kappa from "./kappa";
-import { component } from "./kappa";
+import Kappa from "../src/kappa";
 import { html } from "lit-html";
 
 const template = () => {

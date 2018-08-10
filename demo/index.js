@@ -1,4 +1,4 @@
-import Kappa from './kappa';
+import Kappa from '../src/kappa';
 import './hello-world';
 
 const el = document.querySelector('.app');
