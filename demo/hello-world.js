@@ -8,7 +8,13 @@ const template = () => {
 };
 
 Kappa.component("hello-world", template, {
+  beforeCreated() {
+    console.log("beforeCreated");
+  },
   created() {
     console.log("created");
+  },
+  destroyed() {
+    console.log("destroyed");
   }
 });
