@@ -54,7 +54,8 @@ function createKappaComponent(definition) {
 
     constructor() {
       super();
-      this.definition = proxyContext(definition, this);
+      this.definition = proxyContext(Object.assign({}, definition), this);
+      // this.definition = proxyContext(definition, this);
       this.definition.beforeCreated();
       attachMethods(this.definition.methods, this);
 
