@@ -32,6 +32,14 @@ function proxyContext(obj, context) {
   return obj;
 }
 
+function attachMethods(methods, context) {
+  Object.keys(methods).forEach(key => {
+    if (typeof methods[key] === 'function') {
+      context[key] = methods[key]
+    }
+  });
+}
+
 function createKappaComponent(definition) {
   definition = Object.assign({}, defaultLifecycleHooks, definition);
   return class extends HTMLElement {
@@ -42,6 +50,7 @@ function createKappaComponent(definition) {
       super();
       this.definition = proxyContext(definition, this);
       this.definition.beforeCreated();
+      attachMethods(this.definition.methods, this);
 
       const shadow = this.attachShadow({ mode: "open" });
       this.container = document.createDocumentFragment();
