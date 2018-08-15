@@ -1,4 +1,4 @@
-import { render } from 'lit-html';
+import { html, render } from 'lit-html';
 const noop = () => {};
 
 render;
@@ -88,7 +88,9 @@ function createKappaComponent(definition) {
 
     _render() {
       this.definition.beforeUpdate();
-      render(this.definition.template(), this.container);
+      let template = this.definition.template();
+      if (this.definition.styles) template = html`<style>${this.definition.styles}</style>${template}`
+      render(template, this.container);
       this.definition.updated();
     }
 
