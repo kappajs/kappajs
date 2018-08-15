@@ -37,6 +37,8 @@ function proxyContext(obj, context) {
 }
 
 function attachMethods(methods, context) {
+  if (!methods) return;
+
   Object.keys(methods).forEach(key => {
     if (typeof methods[key] === 'function') {
       context[key] = methods[key].bind(context)
