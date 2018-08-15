@@ -41,6 +41,7 @@ function createKappaComponent(template, definition) {
     constructor() {
       super();
       this.definition = proxyContext(definition, this);
+      this.template = template.bind(this);
       this.definition.beforeCreated();
 
       const shadow = this.attachShadow({ mode: "open" });
@@ -51,12 +52,13 @@ function createKappaComponent(template, definition) {
 
     setState(newState) {
       this.state = newState;
+      console.log(this.state);
       this._render();
     }
 
     _render() {
       this.definition.beforeUpdate();
-      return render(template(this), this.container);
+      render(this.template(), this.container);
       this.definition.updated();
     }
 
