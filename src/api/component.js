@@ -4,14 +4,24 @@ const noop = () => {};
 render;
 
 const reservedComponentApi = [
-
-]
+  'setState',
+  '_render',
+  'connectedCallback',
+  'disconnectedCallback',
+  'attributeChangedCallback',
+];
 
 const componentMap = {};
 
 function component(name, definition) {
-  if (componentMap[name])
+  if (componentMap[name]) {
     throw new Error(`The component <${name} /> is already registered`);
+  }
+
+  const reservedKeywordUsed = Object.keys(definition).find(key => reservedComponentApi.includes(key));
+  if (reservedKeywordUsed) {
+    throw new Error(`The component <${name} /> contains the method ${reservedKeywordUsed} which is a reserved keyword in Kappa.js`);
+  }
 
   const webComponent = createKappaComponent(definition);
   componentMap[name] = webComponent;
@@ -48,16 +58,24 @@ function attachMethods(methods, context) {
   return methods;
 }
 
+function createComponentDataProxyHandler(context) {
+  return {
+    set(obj, key, value) {
+      obj[key] = value;
+      context._render();
+      return true;
+    },
+  }
+}
+
 function createKappaComponent(definition) {
   definition = Object.assign({}, defaultLifecycleHooks, definition);
   return class extends HTMLElement {
 
-    state = {}
-
     constructor() {
       super();
+      this.state = new Proxy(definition.data(), createComponentDataProxyHandler(this))
       this.definition = proxyContext(Object.assign({}, definition), this);
-      // this.definition = proxyContext(definition, this);
       this.definition.beforeCreated();
       attachMethods(this.definition.methods, this);
 
@@ -65,11 +83,6 @@ function createKappaComponent(definition) {
       this.container = document.createDocumentFragment();
       this._render();
       shadow.appendChild(this.container);
-    }
-
-    setState(newState) {
-      this.state = newState;
-      this._render();
     }
 
     _render() {
