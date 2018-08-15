@@ -21,14 +21,25 @@ const defaultLifecycleHooks = {
   destroyed: noop
 };
 
+function proxyContext(obj, context) {
+  Object.keys(obj).forEach(key => {
+    if (typeof obj[key] === 'function') {
+      obj[key] = obj[key].bind(context);
+    }
+  });
+
+  return obj;
+}
+
 function createKappaComponent(template, definition) {
   definition = Object.assign({}, defaultLifecycleHooks, definition);
   return class extends HTMLElement {
     constructor() {
       super();
-      this.definition = definition;
+      this.definition = proxyContext(definition, this);
 
-      definition.beforeCreated();
+      console.log(this.definition);
+      this.definition.created();
 
       const shadow = this.attachShadow({ mode: "open" });
       const container = document.createDocumentFragment();
@@ -36,21 +47,25 @@ function createKappaComponent(template, definition) {
       shadow.appendChild(container);
     }
 
+    sayHello() {
+      console.log('hello');
+    }
+
     _render() {
       return template();
     }
 
     connectedCallback() {
-      definition.created();
+      this.definition.created();
     }
 
     disconnectedCallback() {
       debugger;
-      definition.destroyed();
+      this.definition.created();
     }
 
     attributeChangedCallback(attrName, oldVal, newVal) {
-      definition.updated();
+      this.definition.created();
     }
   };
 }
