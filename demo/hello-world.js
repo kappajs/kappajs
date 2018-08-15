@@ -1,13 +1,12 @@
 import Kappa from "../src/kappa";
 import { html } from "lit-html/lib/lit-extended";
 
-const template = (self) => {
-  return html`
-    <h1 on-click=${() => self.setState({name: 'clicked'})}>Hello ${self.state.name}</h1>
-  `;
-};
-
-Kappa.component("hello-world", template, {
+Kappa.component("hello-world", {
+  template() {
+    return html`
+      <h1 on-click=${() => this.setState({name: 'clicked'})}>Hello ${this.state.name}</h1>
+    `;
+  },
   beforeCreated() {
     console.log("beforeCreated");
   },

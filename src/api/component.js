@@ -5,11 +5,11 @@ render;
 
 const componentMap = {};
 
-function component(name, template, definition) {
+function component(name, definition) {
   if (componentMap[name])
     throw new Error(`The component <${name} /> is already registered`);
 
-  const webComponent = createKappaComponent(template, definition);
+  const webComponent = createKappaComponent(definition);
   componentMap[name] = webComponent;
   window.customElements.define(name, webComponent);
 }
@@ -32,7 +32,7 @@ function proxyContext(obj, context) {
   return obj;
 }
 
-function createKappaComponent(template, definition) {
+function createKappaComponent(definition) {
   definition = Object.assign({}, defaultLifecycleHooks, definition);
   return class extends HTMLElement {
 
@@ -41,7 +41,6 @@ function createKappaComponent(template, definition) {
     constructor() {
       super();
       this.definition = proxyContext(definition, this);
-      this.template = template.bind(this);
       this.definition.beforeCreated();
 
       const shadow = this.attachShadow({ mode: "open" });
@@ -52,13 +51,12 @@ function createKappaComponent(template, definition) {
 
     setState(newState) {
       this.state = newState;
-      console.log(this.state);
       this._render();
     }
 
     _render() {
       this.definition.beforeUpdate();
-      render(this.template(), this.container);
+      render(this.definition.template(), this.container);
       this.definition.updated();
     }
 
