@@ -1,4 +1,4 @@
-import { render } from "lit-html";
+import { render } from 'lit-html';
 const noop = () => {};
 
 render;
@@ -79,7 +79,7 @@ function createKappaComponent(definition) {
       this.definition.beforeCreated();
       attachMethods(this.definition.methods, this);
 
-      const shadow = this.attachShadow({ mode: "open" });
+      const shadow = this.attachShadow({ mode: 'open' });
       this.container = document.createDocumentFragment();
       this._render();
       shadow.appendChild(this.container);

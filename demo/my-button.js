@@ -1,13 +1,12 @@
 import Kappa from '../src/kappa';
 import { html } from 'lit-html/lib/lit-extended';
 
-Kappa.component('hello-world', {
+Kappa.component('my-button', {
   template() {
     return html`
-      <h1>Hello ${this.state.count}</h1>
-      <my-button on-click=${this.yolo}>
-        test
-      </my-button>
+      <button slot="content">
+        <slot id="content"></slot>
+      </button>
     `;
   },
   data() {
