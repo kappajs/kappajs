@@ -1,9 +1,9 @@
 import Kappa from "../src/kappa";
-import { html } from "lit-html";
+import { html } from "lit-html/lib/lit-extended";
 
-const template = () => {
+const template = (self) => {
   return html`
-    <h1>Hello World</h1>
+    <h1 on-click=${() => self.setState({name: 'clicked'})}>Hello ${self.state.name}</h1>
   `;
 };
 
@@ -13,6 +13,9 @@ Kappa.component("hello-world", template, {
   },
   created() {
     console.log("created");
+    this.setState({
+      name: 'Kappa'
+    });
   },
   destroyed() {
     console.log("destroyed");
