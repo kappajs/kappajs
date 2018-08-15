@@ -3,6 +3,10 @@ const noop = () => {};
 
 render;
 
+const reservedComponentApi = [
+
+]
+
 const componentMap = {};
 
 function component(name, definition) {
@@ -38,6 +42,8 @@ function attachMethods(methods, context) {
       context[key] = methods[key]
     }
   });
+
+  return methods;
 }
 
 function createKappaComponent(definition) {
@@ -50,6 +56,7 @@ function createKappaComponent(definition) {
       super();
       this.definition = proxyContext(definition, this);
       this.definition.beforeCreated();
+      proxyContext(this.definition.methods, this);
       attachMethods(this.definition.methods, this);
 
       const shadow = this.attachShadow({ mode: "open" });

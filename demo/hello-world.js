@@ -21,6 +21,7 @@ Kappa.component("hello-world", {
   },
   methods: {
     yolo() {
+      console.log(this.yolo);
       console.log('yolo');
     }
   }
