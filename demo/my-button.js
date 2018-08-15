@@ -9,23 +9,4 @@ Kappa.component('my-button', {
       </button>
     `;
   },
-  data() {
-    return {
-      count: 0
-    }
-  },
-  beforeCreated() {
-    console.log('beforeCreated');
-  },
-  created() {
-    console.log('created');
-  },
-  destroyed() {
-    console.log('destroyed');
-  },
-  methods: {
-    yolo() {
-      this.state.count = this.state.count + 1;
-    }
-  }
 });

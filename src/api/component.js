@@ -74,6 +74,7 @@ function createKappaComponent(definition) {
 
     constructor() {
       super();
+      if (!definition.data) definition.data = function() {return {}};
       this.state = new Proxy(definition.data(), createComponentDataProxyHandler(this))
       this.definition = proxyContext(Object.assign({}, definition), this);
       this.definition.beforeCreated();
