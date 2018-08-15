@@ -4,7 +4,7 @@ import { html } from "lit-html/lib/lit-extended";
 Kappa.component("hello-world", {
   template() {
     return html`
-      <h1 on-click=${this.yolo}>Hello ${this.state.name}</h1>
+      <h1 on-click=${this.yolo}>Hello ${this.state.count}</h1>
     `;
   },
   beforeCreated() {
@@ -13,7 +13,8 @@ Kappa.component("hello-world", {
   created() {
     console.log("created");
     this.setState({
-      name: 'Kappa'
+      name: 'Kappa',
+      count: 0
     });
   },
   destroyed() {
@@ -21,7 +22,10 @@ Kappa.component("hello-world", {
   },
   methods: {
     yolo() {
-      console.log('yolo');
+      console.log(this.state.count);
+      this.setState({
+        count: this.state.count + 1
+      })
     }
   }
 });
