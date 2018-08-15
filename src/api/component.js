@@ -39,7 +39,7 @@ function proxyContext(obj, context) {
 function attachMethods(methods, context) {
   Object.keys(methods).forEach(key => {
     if (typeof methods[key] === 'function') {
-      context[key] = methods[key]
+      context[key] = methods[key].bind(context)
     }
   });
 
@@ -56,7 +56,6 @@ function createKappaComponent(definition) {
       super();
       this.definition = proxyContext(definition, this);
       this.definition.beforeCreated();
-      proxyContext(this.definition.methods, this);
       attachMethods(this.definition.methods, this);
 
       const shadow = this.attachShadow({ mode: "open" });
