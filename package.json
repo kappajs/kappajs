@@ -15,6 +15,7 @@
     "express": "^4.16.3",
     "lit-html": "^0.10.2",
     "parcel-bundler": "^1.9.7",
+    "src": "^1.1.2",
     "webcomponentsjs": "^1.0.2"
   },
   "devDependencies": {

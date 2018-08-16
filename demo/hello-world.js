@@ -1,5 +1,7 @@
 import Kappa from '../src/kappa';
 import { html } from 'lit-html/lib/lit-extended';
+import '../src/router/route.js';
+import NewRoute from './new-route';
 
 Kappa.component('hello-world', {
   template() {
@@ -8,6 +10,8 @@ Kappa.component('hello-world', {
       <my-button on-click=${this.yolo} count$=${this.state.count}>
         Increment
       </my-button>
+
+      <kappa-route path="/test" component="new-route"}></kappa-route>
     `;
   },
   data() {
