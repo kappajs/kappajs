@@ -10,11 +10,17 @@ const component = Kappa.component('kappa-route', {
   created() {
     console.log(this.props.component);
   },
+  mounted() {
+    console.log('mounted')
+  },
   props: ['path', 'component'],
   methods: {
     test() {
       if (location.pathname === this.props.path) {
-        return document.createElement(this.props.component);
+        if (this.props.component) {
+          return document.createElement(this.props.component);
+        }
+        return html`<slot></slot>`
       }
     }
   }

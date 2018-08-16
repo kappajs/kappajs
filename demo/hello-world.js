@@ -11,7 +11,12 @@ Kappa.component('hello-world', {
         Increment
       </my-button>
 
-      <kappa-route path="/test" component="new-route"}></kappa-route>
+      <kappa-route path="/test/blue" component="new-route">
+      </kappa-route>
+
+      <kappa-route path="/test/blue">
+        <h2>Bruh</h2>
+      </kappa-route>
     `;
   },
   data() {

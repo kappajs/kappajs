@@ -30,6 +30,7 @@ function component(name, definition) {
 const defaultLifecycleHooks = {
   beforeCreated: noop,
   created: noop,
+  mounted: noop,
   beforeUpdate: noop,
   updated: noop,
   destroyed: noop
@@ -71,6 +72,8 @@ function createKappaComponent(definition) {
   definition = Object.assign({}, defaultLifecycleHooks, definition);
   return class extends HTMLElement {
 
+    hasMounted = false;
+
     static get observedAttributes() {
       return definition.props || [];
     }
@@ -95,7 +98,11 @@ function createKappaComponent(definition) {
       let template = this.definition.template();
       if (this.definition.styles) template = html`<style>${this.definition.styles}</style>${template}`
       render(template, this.container);
-      this.definition.updated();
+      if (this.hasMounted) this.definition.updated();
+      else {
+        this.definition.mounted();
+        this.hasMounted = true;
+      }
     }
 
     connectedCallback() {
