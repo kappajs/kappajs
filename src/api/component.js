@@ -4,7 +4,6 @@ const noop = () => {};
 render;
 
 const reservedComponentApi = [
-  'setState',
   '_render',
   'connectedCallback',
   'disconnectedCallback',
@@ -72,11 +71,16 @@ function createKappaComponent(definition) {
   definition = Object.assign({}, defaultLifecycleHooks, definition);
   return class extends HTMLElement {
 
+    static get observedAttributes() {
+      return definition.props || [];
+    }
+
     constructor() {
       super();
       if (!definition.data) definition.data = function() {return {}};
       this.state = new Proxy(definition.data(), createComponentDataProxyHandler(this))
       this.definition = proxyContext(Object.assign({}, definition), this);
+      this.props = {};
       this.definition.beforeCreated();
       attachMethods(this.definition.methods, this);
 
@@ -103,7 +107,10 @@ function createKappaComponent(definition) {
     }
 
     attributeChangedCallback(attrName, oldVal, newVal) {
-      this._render();
+      if (oldVal !== newVal) {
+        this.props[attrName] = newVal;
+        this._render();
+      }
     }
   };
 }

@@ -5,7 +5,7 @@ Kappa.component('hello-world', {
   template() {
     return html`
       <h1>Hello ${this.state.count}</h1>
-      <my-button on-click=${this.yolo}>
+      <my-button on-click=${this.yolo} count$=${this.state.count}>
         Increment
       </my-button>
     `;

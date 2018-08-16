@@ -5,9 +5,13 @@ Kappa.component('my-button', {
   template() {
     return html`
       <button>
-        <strong><slot></slot></strong>
+        <strong><slot></slot>${this.props.count}</strong>
       </button>
     `;
+  },
+  props: ['count'],
+  updated() {
+    console.log('updated');
   },
   styles: `
     button {
