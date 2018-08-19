@@ -4,7 +4,7 @@ import { html } from 'lit-html/lib/lit-extended';
 const component = Kappa.component('new-route', {
   template() {
     return html`
-      <h2>New Route</h2>
+      <h2>Route 1</h2>
     `;
   },
 });

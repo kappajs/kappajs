@@ -100,6 +100,7 @@ function createKappaComponent(definition) {
       render(template, this.container);
       if (this.hasMounted) this.definition.updated();
       else {
+        // TODO mounted doesn't recieve props
         this.definition.mounted();
         this.hasMounted = true;
       }
@@ -110,7 +111,7 @@ function createKappaComponent(definition) {
     }
 
     disconnectedCallback() {
-      this.definition.detroyed();
+      this.definition.destroyed();
     }
 
     attributeChangedCallback(attrName, oldVal, newVal) {

@@ -1,4 +1,5 @@
 import Kappa from '../src/kappa';
+import '../src/router';
 import './hello-world';
 import './my-button';
 

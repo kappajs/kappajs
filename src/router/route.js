@@ -1,21 +1,23 @@
 import Kappa from '../kappa';
+import { subscribeToHistoryChange } from './utils';
 import { html } from 'lit-html/lib/lit-extended';
 
-const component = Kappa.component('kappa-route', {
+export const Route = Kappa.component('ez-route', {
   template() {
     return html`
       ${this.test()}
     `
   },
-  created() {
-    console.log(this.props.component);
-  },
-  mounted() {
-    console.log('mounted')
-  },
+  // TODO: exact
   props: ['path', 'component'],
+  created() {
+    subscribeToHistoryChange(() => {
+      this._render();
+    });
+  },
   methods: {
     test() {
+      console.log(location.pathname, this.props.path, location.pathname === this.props.path);
       if (location.pathname === this.props.path) {
         if (this.props.component) {
           return document.createElement(this.props.component);
@@ -26,4 +28,4 @@ const component = Kappa.component('kappa-route', {
   }
 })
 
-export default component;
+export default Route;
