@@ -3,15 +3,15 @@ import { html } from 'lit-html/lib/lit-extended';
 import '../src/router/route.js';
 import NewRoute from './new-route';
 
-Kappa.component('hello-world', {
+export default Kappa.component('hello-world', {
   template() {
     return html`
-      <h1>Hello ${this.state.count}</h1>
-      <my-button on-click=${this.yolo} count$=${this.state.count}>
+      <h1>Hello ${this.$store.state.count}</h1>
+      <my-button on-click=${this.yolo} count$=${this.$store.state.count}>
         Increment
       </my-button>
 
-      <kappa-route path="/test/blue" component="new-route">
+      <kappa-route path="/test" component="new-route">
       </kappa-route>
 
       <kappa-route path="/test/blue">
@@ -20,9 +20,7 @@ Kappa.component('hello-world', {
     `;
   },
   data() {
-    return {
-      count: 0
-    }
+    return {};
   },
   beforeCreated() {
     console.log('beforeCreated');
@@ -30,12 +28,15 @@ Kappa.component('hello-world', {
   created() {
     console.log('created');
   },
+  updated() {
+    console.log(this.$store);
+  },
   destroyed() {
     console.log('destroyed');
   },
   methods: {
     yolo() {
-      this.state.count = this.state.count + 1;
-    }
-  }
+      this.$store.dispatch('INCREMENT_COUNT');
+    },
+  },
 });

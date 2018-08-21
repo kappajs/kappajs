@@ -1,7 +1,7 @@
 import Kappa from '../src/kappa';
 import { html } from 'lit-html/lib/lit-extended';
 
-Kappa.component('my-button', {
+export default Kappa.component('my-button', {
   template() {
     return html`
       <button>
@@ -30,5 +30,5 @@ Kappa.component('my-button', {
     button:active {
       background: lightblue;
     }
-  `
+  `,
 });
